@@ -7,9 +7,9 @@ describe('CompteurComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CompteurComponent ]
+      declarations: [CompteurComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(CompteurComponent);
     component = fixture.componentInstance;
@@ -21,23 +21,40 @@ describe('CompteurComponent', () => {
   });
 
   it('Check count is 0', () => {
-    const spanCount: HTMLSpanElement = fixture.nativeElement.querySelector('[data-testId="compteur"]')
+    const spanCount: HTMLSpanElement = fixture.nativeElement.querySelector('[id="compteur"]')
     expect(spanCount.innerHTML).toBe('0');
   })
 
   it('increase value', () => {
-    const buttonIncrement = fixture.nativeElement.querySelector('[data-testId="increment"]')
+    const buttonIncrement = fixture.nativeElement.querySelector('[id="increment"]')
     buttonIncrement.click();
+    fixture.detectChanges();
 
-    const spanCount: HTMLSpanElement = fixture.nativeElement.querySelector('[data-testId="compteur"]')
+    const spanCount: HTMLSpanElement = fixture.nativeElement.querySelector('[id="compteur"]')
     expect(spanCount.innerHTML).toBe('1');
   })
 
-  it('decrease value', () => {
-    const buttonIncrement = fixture.nativeElement.querySelector('[data-testId="increment"]')
-    buttonIncrement.click();
+  it('decrease value at 0', () => {
+    const buttonDecrease = fixture.nativeElement.querySelector('[id="decrement"]')
+    buttonDecrease.click();
+    fixture.detectChanges();
 
-    const spanCount: HTMLSpanElement = fixture.nativeElement.querySelector('[data-testId="compteur"]')
-    expect(spanCount.innerHTML).toBe('-1');
+    const spanCount: HTMLSpanElement = fixture.nativeElement.querySelector('[id="compteur"]')
+    expect(spanCount.innerHTML).toBe('0');
+  })
+
+  it('decrease value', () => {
+    const buttonIncrement = fixture.nativeElement.querySelector('[id="increment"]')
+    buttonIncrement.click();
+    fixture.detectChanges();
+    buttonIncrement.click();
+    fixture.detectChanges();
+
+    const buttonDecrease = fixture.nativeElement.querySelector('[id="decrement"]')
+    buttonDecrease.click();
+    fixture.detectChanges();
+
+    const spanCount: HTMLSpanElement = fixture.nativeElement.querySelector('[id="compteur"]')
+    expect(spanCount.innerHTML).toBe('1');
   })
 });
